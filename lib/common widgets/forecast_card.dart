@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 
 Widget forecastCard({time, icon, double? temp,height, width}){
@@ -9,7 +8,7 @@ return Padding(
     height: height,
     width: width,
     decoration: BoxDecoration(
-      color: const Color(0xFF067B6C),
+        gradient: LinearGradient(colors:[Color(0xFF00b4d8),Color(0xFF90e0ef), Color(0xFFcaf0f8)],),
       borderRadius: BorderRadius.circular(13)
     ),
   child: Column(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:weather/btmnav.dart';
 import 'package:weather/delhi.dart';
 import 'package:weather/splash.dart';
 

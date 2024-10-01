@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:weather/cities.dart';
 import 'package:weather/common%20widgets/forecast_card.dart';
 
 class Chandigarh extends StatefulWidget{
@@ -85,10 +86,12 @@ class _FirstState extends State<Chandigarh> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: Color(0xFFcaf0f8),
+      drawer: Cities(),
       appBar: AppBar(
         title: Text("Weather"),
         centerTitle: true,
-        backgroundColor: Color(0xFF067B6C),
+        backgroundColor: Color(0xFF48cae4),
         actions: [
           IconButton(onPressed:(){}, icon: Icon(Icons.refresh))
         ],
@@ -98,6 +101,8 @@ class _FirstState extends State<Chandigarh> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Text("Chandigarh", style: TextStyle(fontSize:22 ),),
+              SizedBox(height: 10,),
               Material(
                 elevation: 12,
                 shadowColor: Colors.grey,
@@ -105,7 +110,7 @@ class _FirstState extends State<Chandigarh> {
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Color(0xFF067B6C),
+                    gradient: LinearGradient(colors:[Color(0xFF00b4d8),Color(0xFF90e0ef), Color(0xFFcaf0f8)],),
                     borderRadius: BorderRadius.circular(21.0),
                   ),
                   child: Column(
