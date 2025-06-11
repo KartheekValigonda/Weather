@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather/delhi.dart';
+import 'package:weather/weather_screen.dart';
 import 'package:weather/splash.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
 
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF00b4d8)),
         useMaterial3: true,
       ),
       title: 'Weather App',

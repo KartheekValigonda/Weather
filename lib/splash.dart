@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:weather/delhi.dart';
+import 'package:weather/weather_screen.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -14,7 +14,7 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     Future.delayed(Duration(seconds: 3),(){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Delhi()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>WeatherScreen()));
     });
     super.initState();
   }

@@ -2,20 +2,21 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'package:weather/cities.dart';
 import 'package:weather/common%20widgets/forecast_card.dart';
 
-class Mumbai extends StatefulWidget{
-  const Mumbai({super.key});
+class WeatherScreen extends StatefulWidget{
+  const WeatherScreen({super.key});
 
   @override
-  State<Mumbai> createState() => _FirstState();
+  State<WeatherScreen> createState() => _WeatherScreenState();
 }
 
-class _FirstState extends State<Mumbai> {
+class _WeatherScreenState extends State<WeatherScreen> {
 
   bool isLoading = false;
+  final TextEditingController _searchController = TextEditingController();
 
   double temp = 0;
   int? humidity;
@@ -42,13 +43,20 @@ class _FirstState extends State<Mumbai> {
     getCurrentWeather();
   }
 
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   Future<void> getCurrentWeather() async{
     try{
       setState(() {
         isLoading = true;
       });
+      final city = _searchController.text.isEmpty ? 'Delhi' : _searchController.text;
       final res = await http.get(
-        Uri.parse('https://api.openweathermap.org/data/2.5/forecast?q=Mumbai&APPID=f905fe9e61013cb322bd4b6a6f940def'),);
+        Uri.parse('https://api.openweathermap.org/data/2.5/forecast?q=$city&APPID=f905fe9e61013cb322bd4b6a6f940def'),);
 
       final data = jsonDecode(res.body);
 
@@ -86,13 +94,12 @@ class _FirstState extends State<Mumbai> {
 
     return Scaffold(
       backgroundColor: Color(0xFFcaf0f8),
-      drawer: Cities(),
       appBar: AppBar(
         title: Text("Weather"),
         centerTitle: true,
         backgroundColor: Color(0xFF48cae4),
         actions: [
-          IconButton(onPressed:(){}, icon: Icon(Icons.refresh))
+         IconButton(onPressed:(){}, icon: Icon(Icons.refresh))
         ],
       ),
       body: isLoading ? Center(child: const CircularProgressIndicator()):Padding(
@@ -100,7 +107,23 @@ class _FirstState extends State<Mumbai> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Text("Mumbai", style: TextStyle(fontSize:22 ),),
+              TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  hintText: 'Search city...',
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(22),
+                  ),
+                  filled: true,
+                  fillColor: Color(0xFFcaf0f8),
+                ),
+                onSubmitted: (value) {
+                  getCurrentWeather();
+                },
+              ),
+              SizedBox(height: 20),
+              Text(_searchController.text.isEmpty ? "Delhi" : _searchController.text, style: TextStyle(fontSize:22 ),),
               SizedBox(height: 10,),
               Material(
                 elevation: 12,
@@ -129,51 +152,51 @@ class _FirstState extends State<Mumbai> {
               SizedBox(height: 25,),
               Text("Hourly Forecast", style: TextStyle(fontSize: 20),),
               SizedBox(height: 20,),
-
+          
               SingleChildScrollView(
                 scrollDirection:Axis.horizontal,
                 physics: BouncingScrollPhysics(),
                 child: Row(
-                  children: [
-                    forecastCard(
+                    children: [
+                      forecastCard(
                         time: "$time1",
                         icon: Icons.cloud,
                         temp:  temp1,
                         height: context.screenHeight*0.2,
                         width: context.screenWidth*0.38
-                    ),
-                    forecastCard(
-                        time: "$time2",
-                        icon: Icons.cloud,
-                        temp:  temp2,
-                        height: context.screenHeight*0.2,
-                        width: context.screenWidth*0.38
-                    ),
-                    forecastCard(
-                        time: "$time3",
-                        icon: Icons.cloud,
-                        temp:  temp3,
-                        height: context.screenHeight*0.2,
-                        width: context.screenWidth*0.38
-                    ),
-                    forecastCard(
-                        time: "$time4",
-                        icon: Icons.cloud,
-                        temp:  temp4,
-                        height: context.screenHeight*0.2,
-                        width: context.screenWidth*0.38
-                    ),
-                    forecastCard(
-                        time: "$time5",
-                        icon: Icons.cloud,
-                        temp:  temp5,
-                        height: context.screenHeight*0.2,
-                        width: context.screenWidth*0.38
-                    )
-                  ],
-                ),
+                      ),
+                      forecastCard(
+                          time: "$time2",
+                          icon: Icons.cloud,
+                          temp:  temp2,
+                          height: context.screenHeight*0.2,
+                          width: context.screenWidth*0.38
+                      ),
+                      forecastCard(
+                          time: "$time3",
+                          icon: Icons.cloud,
+                          temp:  temp3,
+                          height: context.screenHeight*0.2,
+                          width: context.screenWidth*0.38
+                      ),
+                      forecastCard(
+                          time: "$time4",
+                          icon: Icons.cloud,
+                          temp:  temp4,
+                          height: context.screenHeight*0.2,
+                          width: context.screenWidth*0.38
+                      ),
+                      forecastCard(
+                          time: "$time5",
+                          icon: Icons.cloud,
+                          temp:  temp5,
+                          height: context.screenHeight*0.2,
+                          width: context.screenWidth*0.38
+                      )
+                    ],
+                  ),
               ),
-              SizedBox(height: 30,),
+                SizedBox(height: 30,),
               Text("Additional Information", style: TextStyle(fontSize: 20),),
               SizedBox(height: 15,),
               Row(
